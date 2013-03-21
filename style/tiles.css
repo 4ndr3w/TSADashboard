@@ -1,0 +1,52 @@
+body{
+	background-color:#FFFFFF;
+}
+
+#container{
+	margin:auto;
+	width:1000px;
+	color:white;
+	font-family:Verdana;
+}
+
+.tile{
+	margin:5px;
+	padding:10px;
+	width:200px;
+	height:200px;
+	float:left;
+	position:relative;
+}
+
+.large{
+	width:275px;
+	height:275px;
+}
+
+.medium{
+	width:200px;
+	height:200px;
+}
+
+.Head{
+	width:220px;
+	height:100px;
+	text-align:center;
+	vertical-align:middle;
+	position:absolute;
+	top:10px;
+	left:0;
+}
+.Body{
+	width:220px;
+	height:100px;
+	text-align:center;
+	vertical-align:middle;
+	position:absolute;
+	top:120px;
+	left:0;
+}
+
+.img{
+	
+}
