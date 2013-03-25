@@ -1,13 +1,15 @@
 stv = new Object(); //set tile values
-stv.red = '#FF2020';
-stv.orange = '#FF8000';
-stv.purple = '#AA00FF';
-stv.blue = '#0000EE';
-stv.white = '#FFFFFF';
-stv.black = '#000000';
+stv.red = '#CC0033';
+stv.orange = '#CC6600';
+stv.purple = '#990099';
+stv.blue = '#3366CC';
+stv.green = '#009933';
 stv.small = '120px';
 stv.medium = '200px';
 stv.large = '280px';
+
+
+
 
 function tile(n,bColor){
 

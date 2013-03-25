@@ -7,21 +7,25 @@
 	<link rel="stylesheet" href="style/tiles.css">
 	<script src="js/object.js" type="text/javascript"></script>
 	<script src="js/tile.js" type="text/javascript"></script>
-	<script>
+	<script type="text/javascript">
+	var colors = new Array('#CC0033', '#CC6600', '#990099', '#3366CC', '#009933');
 	function mkTSATimer(name, day, hours, mins)
 	{
-	
-		time = new tile(name, stv.red);
-		
+		color = Math.ceil(Math.random()*4);
+		time = new tile(name, colors[color]);
+		time.Head.addText("1",name);
 		time.Body.addText("time",'Loading...');
-	
-		var targetTime = new Date(2013, 2, day, hours, mins, 0, 0).getTime();
+		var nowTime = new Date();
+		var targetTime = new Date(nowTime.getFullYear(), nowTime.getMonth(), day, hours, mins, 0, 0).getTime();
 		
 		time.Body.addCallBack("time", function(){
 			tDif = targetTime-(new Date().getTime());
-
+			
 			if ( tDif < 0 )
-				return "Past!";
+			{
+				return "Past";
+			}
+				
 			
 			hours = Math.floor(tDif/1000/60/60);
 			min = Math.floor((tDif/1000/60)-hours*60);
@@ -33,11 +37,39 @@
 		time.init();
 	}
 	
+	function musicBoxNowPlaying()
+	{
+		nowPlaying = new tile("Now Playing", stv.blue);
+		nowPlaying.Head.addText("1","Now Playing");
+		nowPlaying.Body.addText("np",'Loading...');
+		
+		nowPlaying.Body.addCallBack("np", function(){
+			
+			return "";
+		},1000);
+		nowPlaying.init();
+	}
+	
 	function init(){
-		mkTSATimer("test", 21, 8, 53 );
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		mkTSATimer("Event #1", 25, 7, 60);
+		
+		musicBoxNowPlaying();
 	}
 	window.onload = init;
 	</script>
+	<style type="text/css">
+	body
+	{
+		background-color: #505050;
+	}
+	</style>
 </head>
 <body>
 	<div id='container'>
