@@ -43,9 +43,15 @@
 		nowPlaying.Head.addText("1","Now Playing");
 		nowPlaying.Body.addText("np",'Loading...');
 		
+		var npObject = {};
 		nowPlaying.Body.addCallBack("np", function(){
-			
-			return "";
+			$.getJSON("/api/nowplaying", function(data)
+			{
+				npObject = data;
+			});
+			if ( npObject.title == undefined )
+				return "Nothing";
+			return npObject.title+" - "+npObject.album+" - "+npObject.artist;
 		},1000);
 		nowPlaying.init();
 	}
