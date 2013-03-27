@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home</title>
+	<title>Dashboard</title>
 	<meta charset='UTF-8'>
 	<meta http-equiv='refresh' content='1800; url=index.php'>
 	<link rel="stylesheet" href="style/tiles.css">
+	<script src="../js/jquery.min.js" type="text/javascript"></script>
 	<script src="js/object.js" type="text/javascript"></script>
 	<script src="js/tile.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	var colors = new Array('#CC0033', '#CC6600', '#990099', '#3366CC', '#009933');
+	var leavePaddingTime = 900000; // 15 min
 	function mkTSATimer(name, day, hours, mins)
 	{
+		var nowTime = new Date();
 		color = Math.ceil(Math.random()*4);
 		time = new tile(name, colors[color]);
 		time.Head.addText("1",name);
 		time.Body.addText("time",'Loading...');
-		var nowTime = new Date();
 		var targetTime = new Date(nowTime.getFullYear(), nowTime.getMonth(), day, hours, mins, 0, 0).getTime();
-		
 		time.Body.addCallBack("time", function(){
-			tDif = targetTime-(new Date().getTime());
+			tDif = (targetTime)-(new Date().getTime());
+			tDifLeaving = (targetTime-leavePaddingTime)-(new Date().getTime());
 			
+			
+			Shours = Math.floor(tDif/1000/60/60);
+			Smin = Math.floor((tDif/1000/60)-Shours*60);
+			var str1 = "Starts in "+Shours+" hours and "+Smin+" minutes.";
+			
+			var str2 = "";
 			if ( tDif < 0 )
 			{
 				return "Past";
 			}
-				
+			else if ( tDif < 60000)
+			{
+				return "Starts in less than a minute";
+			}
 			
-			hours = Math.floor(tDif/1000/60/60);
-			min = Math.floor((tDif/1000/60)-hours*60);
-			sec = Math.floor((tDif/1000)-(min*60)-(hours*60*60));
+			if ( tDifLeaving < 0 )
+			{
+				str2 = "Leave now";
+			}
+			else if ( tDifLeaving < 60000 )
+			{
+				str2 = "Leave in less than a minute";
+			}
+			else
+			{
+				Lhours = Math.floor(tDifLeaving/1000/60/60);
+				Lmin = Math.floor((tDifLeaving/1000/60)-Lhours*60);
+				str2 = "Leave in "+Lhours+" hours and "+Lmin+" minutes";
+			}
 			
-			return hours+":"+min+":"+sec;
+			return str1+" "+str2;
 		},1000);
 
 		time.init();
@@ -42,7 +64,6 @@
 		nowPlaying = new tile("Now Playing", stv.blue);
 		nowPlaying.Head.addText("1","Now Playing");
 		nowPlaying.Body.addText("np",'Loading...');
-		
 		var npObject = {};
 		nowPlaying.Body.addCallBack("np", function(){
 			$.getJSON("/api/nowplaying", function(data)
@@ -50,23 +71,18 @@
 				npObject = data;
 			});
 			if ( npObject.title == undefined )
-				return "Nothing";
-			return npObject.title+" - "+npObject.album+" - "+npObject.artist;
+				return "Nothing<br>\nPlaying";
+			return npObject.title+" <br> "+npObject.album+" <br> "+npObject.artist;
 		},1000);
 		nowPlaying.init();
 	}
 	
 	function init(){
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		mkTSATimer("Event #1", 25, 7, 60);
-		
 		musicBoxNowPlaying();
+
+		mkTSATimer("Lunch", 26, 12, 00);
+
+
 	}
 	window.onload = init;
 	</script>
